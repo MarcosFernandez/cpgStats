@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CpG Dinucleotides Stats &mdash; CpGstats 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="CpGstats 0.0 documentation" href="#" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cpg-dinucleotides-stats">
+<h1>CpG Dinucleotides Stats<a class="headerlink" href="#cpg-dinucleotides-stats" title="Permalink to this headline">¶</a></h1>
+<p><strong>cpgStats</strong> is a C application to parse CpG Dinucleotides file and get a summary of statistics and bed file annotation.
+It can also compare two dinucleotide files to get intersection stats.</p>
+<div class="section" id="cpgstats-quickstart">
+<h2>cpgStats QuickStart<a class="headerlink" href="#cpgstats-quickstart" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before starting to run <strong>cpgStats</strong> please make sure input files are coordinate sorted.</p>
+</div>
+<div class="section" id="download">
+<h3>0. Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<p><strong>cpgStats</strong> can be downloaded from: <a class="reference external" href="https://github.com/MarcosFernandez/cpgStats/">github cpgStats</a></p>
+</div>
+<div class="section" id="compile">
+<h3>1. Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="release">
+<h4>1.1. Release<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h4>
+<p>Download and extract the code and compile it from <code class="docutils literal"><span class="pre">cpgStats/Release</span></code> path.</p>
+<div class="highlight-python"><div class="highlight"><pre>cd cpgStats/Release
+make clean
+make
+</pre></div>
+</div>
+</div>
+<div class="section" id="debug">
+<h4>1.2. Debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h4>
+<p>For cases of code testing it is possible to compile a debug version code.</p>
+<div class="highlight-python"><div class="highlight"><pre>cd cpgStats/Debug
+make clean
+make
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-cpgstats">
+<h3>2. Run cpgStats<a class="headerlink" href="#run-cpgstats" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="get-summary-stats">
+<h4>2.1. Get Summary Stats<a class="headerlink" href="#get-summary-stats" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="from-a-zipped-file">
+<h5>2.1.1 From a zipped file<a class="headerlink" href="#from-a-zipped-file" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python"><div class="highlight"><pre>cpgStats -i file_cpg.txt.gz -z
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-a-unzipped-file">
+<h5>2.1.2 From a unzipped file<a class="headerlink" href="#from-a-unzipped-file" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python"><div class="highlight"><pre>cpgStats -i file_cpg.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="save-stats-in-json-file">
+<h5>2.1.3 Save stats in json file<a class="headerlink" href="#save-stats-in-json-file" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python"><div class="highlight"><pre>cpgStats -i file_cpg.txt.gz -z -o stats.json
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="annotate-bed-file">
+<h4>2.2. Annotate Bed File<a class="headerlink" href="#annotate-bed-file" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>cpgStats -i file_cpg.txt.gz -z -b promoters.sorted.bed -a promoters.annotated.bed
+</pre></div>
+</div>
+</div>
+<div class="section" id="intersection-stats">
+<h4>2.3. Intersection Stats<a class="headerlink" href="#intersection-stats" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>cpgStats -x first_file_cpg.txt.gz -y second_file_cpg.txt.gz -g
+
+-g In case dinucleotide files are compressed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="format-files">
+<h3>3. Format files<a class="headerlink" href="#format-files" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input-cpg-dinucleotides-format-should-be-coordinate-sorted">
+<h4>3.1. Input CpG Dinucleotides Format. <strong>(Should be coordinate sorted.)</strong><a class="headerlink" href="#input-cpg-dinucleotides-format-should-be-coordinate-sorted" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="8%" />
+<col width="7%" />
+<col width="11%" />
+<col width="10%" />
+<col width="8%" />
+<col width="8%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">CONTIG</th>
+<th class="head">POSITION</th>
+<th class="head">CONTEXT
+(Reference)</th>
+<th class="head">CONTEXT
+(Genotype Call)</th>
+<th class="head">Phred
+Score</th>
+<th class="head">Methylation
+(Mode Beta Distrib.)</th>
+<th class="head">Methylation
+Deviation
+(SD Beta Distrib.)</th>
+<th class="head">Info Cs &amp; Ts.
+For Meth.</th>
+<th class="head">Info Ts &amp; Cs.
+For Meth.</th>
+<th class="head">Info Ts,Cs,
+As non Info
+for Meth.</th>
+<th class="head">All Info and
+non Info. For
+methylation.</th>
+<th class="head">MC8</th>
+<th class="head">MC8 next
+by base</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Contig
+Chromosome
+name.</td>
+<td>Position
+in the
+reference
+sequence.</td>
+<td>Dinucleotide
+base call
+according to
+reference.</td>
+<td>Dinucleotide
+base according
+to
+genotype call.</td>
+<td>Phred scaled
+probability
+that REF/ALT
+polymorphism
+exists.</td>
+<td>Methylation value
+according to Mode of
+Beta Distribution
+estimated from
+informative
+methylation counts.</td>
+<td>Standard Deviation
+of the methylation
+value.
+St. Dev of Beta
+Distribution.</td>
+<td>Informative Cs
+for methylation
+or Cs and Ts in
+case of
+CG/CC/GG.</td>
+<td>Informative Ts
+for methylation
+or Ts and As in
+case of
+CG/CC/GG.</td>
+<td>Informative
+Ts,Cs and
+non
+informative
+Cs for
+methylation
+or
+informative
+Cs,Ts,As
+and non
+informative
+Cs,Gs in
+case of
+CG/CC/GG.</td>
+<td>All base
+counts.</td>
+<td>Base counts
+non
+informative
+for
+methylation
+(ACGT)
+followed
+by
+informative
+for
+methylation
+(ACGT).</td>
+<td>Base counts
+non
+informative
+for
+methylation
+(ACGT)
+followed
+by
+informative
+for
+methylation
+(ACGT)
+next by
+base.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="input-bed-file-format-should-be-coordinate-sorted">
+<h4>3.2. Input BED File Format. <strong>(Should be coordinate sorted.)</strong><a class="headerlink" href="#input-bed-file-format-should-be-coordinate-sorted" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="15%" />
+<col width="21%" />
+<col width="8%" />
+<col width="23%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">CONTIG</th>
+<th class="head">START</th>
+<th class="head">END</th>
+<th class="head">EXTRA FIELD 1</th>
+<th class="head">...</th>
+<th class="head">EXTRA FIELD N</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Contig
+Chromosome
+name.</td>
+<td>Start
+Position</td>
+<td>Last
+Position</td>
+<td>Extra
+optional
+field one</td>
+<td>...</td>
+<td>Extra
+optional
+field N</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="output-annotated-bed">
+<h4>3.3. Output <strong>annotated</strong> BED<a class="headerlink" href="#output-annotated-bed" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+<col width="9%" />
+<col width="4%" />
+<col width="10%" />
+<col width="11%" />
+<col width="13%" />
+<col width="14%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">CONTIG</th>
+<th class="head">START</th>
+<th class="head">END</th>
+<th class="head">EXTRA FIELD 1</th>
+<th class="head">...</th>
+<th class="head">EXTRA FIELD N</th>
+<th class="head">MEAN
+METHYLATION</th>
+<th class="head">MEDIAN
+METHYLATION</th>
+<th class="head">STANDARD DEVIATION
+METHYLATION</th>
+<th class="head">CpG
+DINUCLEOTIDES</th>
+<th class="head">HETEROZYGOUS
+DINUCLEOTIDES</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Contig
+Chromosome
+name.</td>
+<td>Start
+Position</td>
+<td>Last
+Position</td>
+<td>Extra
+optional
+field one</td>
+<td>...</td>
+<td>Extra
+optional
+field N</td>
+<td>Mean Methylation
+value of CpG
+Dinucleotides
+present in the
+window.</td>
+<td>Median Methylation
+value of CpG
+Dinucleotides
+present in the
+window.</td>
+<td>Standard Deviation
+methylation value
+of CpG Dinucleotides
+present in the
+window.</td>
+<td>Number of
+CpG
+Dinucleotides
+in the
+window.</td>
+<td>Number of CpG
+Dinucleotides
+heterozygous.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Marcos Fernandez-Callejo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
