@@ -614,7 +614,7 @@ void saveCounts(char * fileName)
 	fprintf(fp,"  \"TotalCpGwithSNPCalledMethylatedHighQuality\":%i,\n",getTotalCpgSnpMethylatedHighQuality());
 
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylated\":%i,\n",getTotalCpgSnpUndefinedMethylated());
-	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylatedQualityO20:\":%i,\n",getTotalCpgSnpUndefinedMethylatedQuality_over20());
+	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylatedQualityO20\":%i,\n",getTotalCpgSnpUndefinedMethylatedQuality_over20());
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylatedHighQuality\":%i,\n",getTotalCpgSnpUndefinedMethylatedHighQuality());
 
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUnMethylated\":%i,\n",getTotalCpgSnpUnMethylated());
