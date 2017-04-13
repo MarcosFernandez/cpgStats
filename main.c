@@ -28,13 +28,13 @@ int bedAnnotation(char * cpgInputFile,char * bedFile,char * annotatedFile,char *
 	/*1. Configure Input Data*/
 	if (configInput(cpgInputFile,isGzip) < 1)
 	{
-	    return 1;
+	    return 0;
 	}
 
 	/*2. Configure Bed Input File*/
 	if(!checkInputBed(bedFile))
 	{
-		return 1;
+		return 0;
 	}
 
 	/*3. Initializations of counts */
@@ -49,7 +49,7 @@ int bedAnnotation(char * cpgInputFile,char * bedFile,char * annotatedFile,char *
 
 	if (checkFileOutput(annotatedFile) != 1)
 	{
-		return 1;
+		return 0;
 	}
 
 	while (getNewWindow(&bedWindow) != 0)
@@ -102,7 +102,7 @@ int bedAnnotation(char * cpgInputFile,char * bedFile,char * annotatedFile,char *
 		saveCounts(jsonFile);
 	}
 
-	return 0;
+	return 1;
 }
 
 /**
@@ -153,7 +153,7 @@ int main (int argc, char *argv[])
 
 	if (getArgs(&arguments,argc,argv) < 1)
 	{
-		return 0;
+		return 1;
 	}
 
 	/*1. GET STATS*/
@@ -161,7 +161,7 @@ int main (int argc, char *argv[])
 	{
 		if (getStats(arguments.cpgInputFile,arguments.jsonFile,arguments.isZipped) < 1)
 		{
-			return 0;
+			return 1;
 		}
 	}
 
@@ -181,5 +181,5 @@ int main (int argc, char *argv[])
 		return runIsec(arguments.firstCpGIsecFile, arguments.secondCpGIsecFile,arguments.areIsecZipped);
 	}
 
-	return 1;
+	return 0;
 }
