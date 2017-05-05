@@ -12,19 +12,19 @@
 
 struct Counts {
    unsigned int homozygousMethylated[4];
-   unsigned int homozygousUndefMethylated[4];
+   unsigned int homozygousInterMethylated[4];
    unsigned int homozygousUnMethylated[4];
 
    unsigned int heterozygousMethylated[4];
-   unsigned int heterozygousUndefMethylated[4];
+   unsigned int heterozygousInterMethylated[4];
    unsigned int heterozygousUnMethylated[4];
 
    unsigned int deNovoCpgMethylated[4];
-   unsigned int deNovoCpgUndefMethylated[4];
+   unsigned int deNovoCpgInterMethylated[4];
    unsigned int deNovoCpgUnMethylated[4];
 
    unsigned int cpgWithSnpMethylated[4];
-   unsigned int cpgWithSnpUndefMethylated[4];
+   unsigned int cpgWithSnpInterMethylated[4];
    unsigned int cpgWithSnpUnMethylated[4];
 } counts;
 
@@ -40,8 +40,8 @@ unsigned int getTotalHeterozygousHighQuality();
 unsigned int getTotalMethylated();
 unsigned int getTotalMethylatedHighQuality();
 
-unsigned int getTotalUndefinedMethylated();
-unsigned int getTotalUndefinedMethylatedHighQuality();
+unsigned int getTotalIntermediateMethylated();
+unsigned int getTotalIntermediateMethylatedHighQuality();
 
 unsigned int getTotalUnMethylated();
 unsigned int getTotalUnMethylatedHighQuality();
@@ -49,8 +49,8 @@ unsigned int getTotalUnMethylatedHighQuality();
 unsigned int getTotalMethylatedHomozygous();
 unsigned int getTotalMethylatedHomozygousHighQuality();
 
-unsigned int getTotalUndefinedMethylatedHomozygous();
-unsigned int getTotalUndefinedMethylatedHomozygousHighQuality();
+unsigned int getTotalIntermediateMethylatedHomozygous();
+unsigned int getTotalIntermediateMethylatedHomozygousHighQuality();
 
 unsigned int getTotalUnMethylatedHomozygous();
 unsigned int getTotalUnMethylatedHomozygousHighQuality();
@@ -58,8 +58,8 @@ unsigned int getTotalUnMethylatedHomozygousHighQuality();
 unsigned int getTotalMethylatedHeterozygous();
 unsigned int getTotalMethylatedHeterozygousHighQuality();
 
-unsigned int getTotalUndefinedMethylatedHeterozygous();
-unsigned int getTotalUndefinedMethylatedHeterozygousHighQuality();
+unsigned int getTotalIntermediateMethylatedHeterozygous();
+unsigned int getTotalIntermediateMethylatedHeterozygousHighQuality();
 
 unsigned int getTotalUnMethylatedHeterozygous();
 unsigned int getTotalUnMethylatedHeterozygousHighQuality();
@@ -78,9 +78,9 @@ unsigned int getTotalDeNovoCpgsMethylated();
 unsigned int getTotalDeNovoCpgsMethylatedHighQuality();
 unsigned int getTotalDeNovoCpgsMethylatedQuality_over20();
 
-unsigned int getTotalDeNovoCpgsUndefinedMethylated();
-unsigned int getTotalDeNovoCpgsUndefinedMethylatedHighQuality();
-unsigned int getTotalDeNovoCpgsUndefinedMethylatedQuality_over20();
+unsigned int getTotalDeNovoCpgsIntermediateMethylated();
+unsigned int getTotalDeNovoCpgsIntermediateMethylatedHighQuality();
+unsigned int getTotalDeNovoCpgsIntermediateMethylatedQuality_over20();
 
 unsigned int getTotalDeNovoCpgsUnMethylated();
 unsigned int getTotalDeNovoCpgsUnMethylatedHighQuality();
@@ -96,9 +96,9 @@ unsigned int getTotalCpgSnpMethylated();
 unsigned int getTotalCpgSnpMethylatedHighQuality();
 unsigned int getTotalCpgSnpMethylatedQuality_over20();
 
-unsigned int getTotalCpgSnpUndefinedMethylated();
-unsigned int getTotalCpgSnpUndefinedMethylatedHighQuality();
-unsigned int getTotalCpgSnpUndefinedMethylatedQuality_over20();
+unsigned int getTotalCpgSnpIntermediateMethylated();
+unsigned int getTotalCpgSnpIntermediateMethylatedHighQuality();
+unsigned int getTotalCpgSnpIntermediateMethylatedQuality_over20();
 
 unsigned int getTotalCpgSnpUnMethylated();
 unsigned int getTotalCpgSnpUnMethylatedHighQuality();

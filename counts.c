@@ -20,19 +20,19 @@ void initCounts()
 	for (i=0; i < 4; i=i+1)
 	{
 	    counts.homozygousMethylated[i] = 0;
-	    counts.homozygousUndefMethylated[i] = 0;
+	    counts.homozygousInterMethylated[i] = 0;
 	    counts.homozygousUnMethylated[i] = 0;
 
 	    counts.heterozygousMethylated[i] = 0;
-	    counts.heterozygousUndefMethylated[i] = 0;
+	    counts.heterozygousInterMethylated[i] = 0;
 	    counts.heterozygousUnMethylated[i] = 0;
 
 	    counts.deNovoCpgMethylated[i] = 0;
-	    counts.deNovoCpgUndefMethylated[i] = 0;
+	    counts.deNovoCpgInterMethylated[i] = 0;
 	    counts.deNovoCpgUnMethylated[i] = 0;
 
 	    counts.cpgWithSnpMethylated[i] = 0;
-	    counts.cpgWithSnpUndefMethylated[i] = 0;
+	    counts.cpgWithSnpInterMethylated[i] = 0;
 	    counts.cpgWithSnpUnMethylated[i] = 0;
 	}
 }
@@ -95,8 +95,8 @@ void addRecordStats(struct Record * record)
 		}
 		else if(record->methValue > 0.3 && record->methValue <= 0.7)
 		{
-			/*3.1.2 UnDefined Methylation*/
-			addCounts(record,counts.homozygousUndefMethylated);
+			/*3.1.2 Intermediate Methylation*/
+			addCounts(record,counts.homozygousInterMethylated);
 		}
 		else
 		{
@@ -114,8 +114,8 @@ void addRecordStats(struct Record * record)
 		}
 		else if(record->methValue > 0.3 && record->methValue <= 0.7)
 		{
-			/*3.2.2 UnDefined Methylation*/
-			addCounts(record,counts.heterozygousUndefMethylated);
+			/*3.2.2 Intermediate Methylation*/
+			addCounts(record,counts.heterozygousInterMethylated);
 		}
 		else
 		{
@@ -133,8 +133,8 @@ void addRecordStats(struct Record * record)
 			}
 			else if(record->methValue > 0.3 && record->methValue <= 0.7)
 			{
-				/*3.3.2 UnDefined Methylation*/
-				addCounts(record,counts.deNovoCpgUndefMethylated);
+				/*3.3.2 Intermediate Methylation*/
+				addCounts(record,counts.deNovoCpgInterMethylated);
 			}
 			else
 			{
@@ -153,8 +153,8 @@ void addRecordStats(struct Record * record)
 			}
 			else if(record->methValue > 0.3 && record->methValue <= 0.7)
 			{
-				/*3.4.2 UnDefined Methylation*/
-				addCounts(record,counts.cpgWithSnpUndefMethylated);
+				/*3.4.2 Intermediate Methylation*/
+				addCounts(record,counts.cpgWithSnpInterMethylated);
 			}
 			else
 			{
@@ -186,21 +186,21 @@ unsigned int getTotalCount(unsigned int * cnt)
 
 
 /* Get Total Homozygous Counts */
-unsigned int getTotalHomozygous(){return (getTotalCount(counts.homozygousMethylated) + getTotalCount(counts.homozygousUndefMethylated) + getTotalCount(counts.homozygousUnMethylated));}
+unsigned int getTotalHomozygous(){return (getTotalCount(counts.homozygousMethylated) + getTotalCount(counts.homozygousInterMethylated) + getTotalCount(counts.homozygousUnMethylated));}
 
 /* Get Total Homozygous Counts High Quality*/
 unsigned int getTotalHomozygousHighQuality()
 {
-	return counts.homozygousMethylated[3] + counts.homozygousUndefMethylated[3] + counts.homozygousUnMethylated[3];
+	return counts.homozygousMethylated[3] + counts.homozygousInterMethylated[3] + counts.homozygousUnMethylated[3];
 }
 
 /* Get Total Heterozygous Counts */
-unsigned int getTotalHeterozygous(){return (getTotalCount(counts.heterozygousMethylated) + getTotalCount(counts.heterozygousUndefMethylated) + getTotalCount(counts.heterozygousUnMethylated));}
+unsigned int getTotalHeterozygous(){return (getTotalCount(counts.heterozygousMethylated) + getTotalCount(counts.heterozygousInterMethylated) + getTotalCount(counts.heterozygousUnMethylated));}
 
 /* Get Total Heterozygous Counts High Quality */
 unsigned int getTotalHeterozygousHighQuality()
 {
-	return counts.heterozygousMethylated[3] + counts.heterozygousUndefMethylated[3] + counts.heterozygousUnMethylated[3];
+	return counts.heterozygousMethylated[3] + counts.heterozygousInterMethylated[3] + counts.heterozygousUnMethylated[3];
 }
 
 /* Get Total Methylated */
@@ -210,11 +210,11 @@ unsigned int getTotalMethylated(){ return (getTotalCount(counts.heterozygousMeth
 unsigned int getTotalMethylatedHighQuality(){ return counts.heterozygousMethylated[3] + counts.homozygousMethylated[3];}
 
 
-/* Get Total Undefined Methylated */
-unsigned int getTotalUndefinedMethylated(){ return (getTotalCount(counts.heterozygousUndefMethylated) + getTotalCount(counts.homozygousUndefMethylated));}
+/* Get Total Intermediate Methylated */
+unsigned int getTotalIntermediateMethylated(){ return (getTotalCount(counts.heterozygousInterMethylated) + getTotalCount(counts.homozygousInterMethylated));}
 
-/* Get Total Undefined Methylated High Quality*/
-unsigned int getTotalUndefinedMethylatedHighQuality(){ return counts.heterozygousUndefMethylated[3] + counts.homozygousUndefMethylated[3];}
+/* Get Total Intermediate Methylated High Quality*/
+unsigned int getTotalIntermediateMethylatedHighQuality(){ return counts.heterozygousInterMethylated[3] + counts.homozygousInterMethylated[3];}
 
 /* Get Total UnMethylated */
 unsigned int getTotalUnMethylated(){ return (getTotalCount(counts.homozygousUnMethylated) + getTotalCount(counts.heterozygousUnMethylated));}
@@ -235,17 +235,17 @@ unsigned int getTotalMethylatedHeterozygous(){ return getTotalCount(counts.heter
 unsigned int getTotalMethylatedHeterozygousHighQuality(){ return counts.heterozygousMethylated[3];}
 
 
-/* Get Total Undefined Methylated Homozygous */
-unsigned int getTotalUndefinedMethylatedHomozygous(){ return getTotalCount(counts.homozygousUndefMethylated);}
+/* Get Total Intermediate Methylated Homozygous */
+unsigned int getTotalIntermediateMethylatedHomozygous(){ return getTotalCount(counts.homozygousInterMethylated);}
 
-/* Get Total Undefined Methylated Homozigous High Quality */
-unsigned int getTotalUndefinedMethylatedHomozygousHighQuality(){ return counts.homozygousUndefMethylated[3];}
+/* Get Total Intermediate Methylated Homozigous High Quality */
+unsigned int getTotalIntermediateMethylatedHomozygousHighQuality(){ return counts.homozygousInterMethylated[3];}
 
-/* Get Total Undefined Methylated Heterozygous */
-unsigned int getTotalUndefinedMethylatedHeterozygous(){ return getTotalCount(counts.heterozygousUndefMethylated);}
+/* Get Total Intermediate Methylated Heterozygous */
+unsigned int getTotalIntermediateMethylatedHeterozygous(){ return getTotalCount(counts.heterozygousInterMethylated);}
 
-/* Get Total Undefined Methylated Heterozygous High Quality */
-unsigned int getTotalUndefinedMethylatedHeterozygousHighQuality(){ return counts.heterozygousUndefMethylated[3];}
+/* Get Total Intermediate Methylated Heterozygous High Quality */
+unsigned int getTotalIntermediateMethylatedHeterozygousHighQuality(){ return counts.heterozygousInterMethylated[3];}
 
 
 /* Get Total UnMethylated Homozygous */
@@ -266,29 +266,29 @@ unsigned int getTotalDinucleotides(){ return getTotalHomozygous() + getTotalHete
 /*Get Total Quality Under 10 */
 unsigned int getTotalQualityUnder10()
 {
-	return counts.homozygousMethylated[0] + counts.homozygousUndefMethylated[0] + counts.homozygousUnMethylated[0] +
-	       counts.heterozygousMethylated[0] + counts.heterozygousUndefMethylated[0] + counts.heterozygousUnMethylated[0];
+	return counts.homozygousMethylated[0] + counts.homozygousInterMethylated[0] + counts.homozygousUnMethylated[0] +
+	       counts.heterozygousMethylated[0] + counts.heterozygousInterMethylated[0] + counts.heterozygousUnMethylated[0];
 }
 
 /*Get Total Quality Between 10 and 20 */
 unsigned int getTotalQualityBetween10_20()
 {
-	return counts.homozygousMethylated[1] + counts.homozygousUndefMethylated[1] + counts.homozygousUnMethylated[1] +
-		   counts.heterozygousMethylated[1] + counts.heterozygousUndefMethylated[1] + counts.heterozygousUnMethylated[1];
+	return counts.homozygousMethylated[1] + counts.homozygousInterMethylated[1] + counts.homozygousUnMethylated[1] +
+		   counts.heterozygousMethylated[1] + counts.heterozygousInterMethylated[1] + counts.heterozygousUnMethylated[1];
 }
 
 /*Get Total Quality Between 20 and 30 */
 unsigned int getTotalQualityBetween20_30()
 {
-	return counts.homozygousMethylated[2] + counts.homozygousUndefMethylated[2] + counts.homozygousUnMethylated[2] +
-		   counts.heterozygousMethylated[2] + counts.heterozygousUndefMethylated[2] + counts.heterozygousUnMethylated[2];
+	return counts.homozygousMethylated[2] + counts.homozygousInterMethylated[2] + counts.homozygousUnMethylated[2] +
+		   counts.heterozygousMethylated[2] + counts.heterozygousInterMethylated[2] + counts.heterozygousUnMethylated[2];
 }
 
 /* Get Total HighQuality */
 unsigned int getTotalHighQuality()
 {
-	return counts.homozygousMethylated[3] + counts.homozygousUndefMethylated[3] + counts.homozygousUnMethylated[3] +
-		   counts.heterozygousMethylated[3] + counts.heterozygousUndefMethylated[3] + counts.heterozygousUnMethylated[3];
+	return counts.homozygousMethylated[3] + counts.homozygousInterMethylated[3] + counts.homozygousUnMethylated[3] +
+		   counts.heterozygousMethylated[3] + counts.heterozygousInterMethylated[3] + counts.heterozygousUnMethylated[3];
 }
 
 
@@ -298,7 +298,7 @@ unsigned int getTotalHighQuality()
  */
 unsigned int getTotalDeNovoCpgs()
 {
-	return getTotalCount(counts.deNovoCpgMethylated) + getTotalCount(counts.deNovoCpgUndefMethylated) + getTotalCount(counts.deNovoCpgUnMethylated);
+	return getTotalCount(counts.deNovoCpgMethylated) + getTotalCount(counts.deNovoCpgInterMethylated) + getTotalCount(counts.deNovoCpgUnMethylated);
 }
 
 /**
@@ -306,7 +306,7 @@ unsigned int getTotalDeNovoCpgs()
  */
 unsigned int getTotalDeNovoCpgsHighQuality()
 {
-	return counts.deNovoCpgMethylated[3] + counts.deNovoCpgUndefMethylated[3] + counts.deNovoCpgUnMethylated[3];
+	return counts.deNovoCpgMethylated[3] + counts.deNovoCpgInterMethylated[3] + counts.deNovoCpgUnMethylated[3];
 }
 
 /**
@@ -314,8 +314,8 @@ unsigned int getTotalDeNovoCpgsHighQuality()
  */
 unsigned int getTotalDeNovoCpgsQuality_over20()
 {
-	return counts.deNovoCpgMethylated[2] + counts.deNovoCpgUndefMethylated[2] + counts.deNovoCpgUnMethylated[2] +
-		   counts.deNovoCpgMethylated[3] + counts.deNovoCpgUndefMethylated[3] + counts.deNovoCpgUnMethylated[3];
+	return counts.deNovoCpgMethylated[2] + counts.deNovoCpgInterMethylated[2] + counts.deNovoCpgUnMethylated[2] +
+		   counts.deNovoCpgMethylated[3] + counts.deNovoCpgInterMethylated[3] + counts.deNovoCpgUnMethylated[3];
 }
 
 
@@ -337,19 +337,19 @@ unsigned int getTotalDeNovoCpgsMethylatedQuality_over20(){	return counts.deNovoC
 
 
 /**
- * \brief Total De Novo CpG Undefined Methylated
+ * \brief Total De Novo CpG Intermediate Methylated
  */
-unsigned int getTotalDeNovoCpgsUndefinedMethylated(){ return getTotalCount(counts.deNovoCpgUndefMethylated);}
+unsigned int getTotalDeNovoCpgsIntermediateMethylated(){ return getTotalCount(counts.deNovoCpgInterMethylated);}
 
 /**
- * \brief Total De Novo High Quality Undefined Methylated
+ * \brief Total De Novo High Quality Intermediate Methylated
  */
-unsigned int getTotalDeNovoCpgsUndefinedMethylatedHighQuality(){ return counts.deNovoCpgUndefMethylated[3];}
+unsigned int getTotalDeNovoCpgsIntermediateMethylatedHighQuality(){ return counts.deNovoCpgInterMethylated[3];}
 
 /**
- * \brief Get Total De Novo Cpgs Undefined Methylated Quality Over 20
+ * \brief Get Total De Novo Cpgs Intermediate Methylated Quality Over 20
  */
-unsigned int getTotalDeNovoCpgsUndefinedMethylatedQuality_over20(){ return counts.deNovoCpgUndefMethylated[2] + counts.deNovoCpgUndefMethylated[3];}
+unsigned int getTotalDeNovoCpgsIntermediateMethylatedQuality_over20(){ return counts.deNovoCpgInterMethylated[2] + counts.deNovoCpgInterMethylated[3];}
 
 
 /**
@@ -374,7 +374,7 @@ unsigned int getTotalDeNovoCpgsUnMethylatedQuality_over20(){ return counts.deNov
  */
 unsigned int getTotalCpgSnp()
 {
-	return getTotalCount(counts.cpgWithSnpMethylated) + getTotalCount(counts.cpgWithSnpUndefMethylated) + getTotalCount(counts.cpgWithSnpUnMethylated);
+	return getTotalCount(counts.cpgWithSnpMethylated) + getTotalCount(counts.cpgWithSnpInterMethylated) + getTotalCount(counts.cpgWithSnpUnMethylated);
 }
 
 /**
@@ -382,7 +382,7 @@ unsigned int getTotalCpgSnp()
  */
 unsigned int getTotalCpgSnpHighQuality()
 {
-	return  counts.deNovoCpgMethylated[3] + counts.deNovoCpgUndefMethylated[3] + counts.deNovoCpgUnMethylated[3];
+	return  counts.deNovoCpgMethylated[3] + counts.deNovoCpgInterMethylated[3] + counts.deNovoCpgUnMethylated[3];
 }
 
 /**
@@ -390,8 +390,8 @@ unsigned int getTotalCpgSnpHighQuality()
  */
 unsigned int getTotalCpgSnpQuality_over20()
 {
-	return  counts.deNovoCpgMethylated[2] + counts.deNovoCpgUndefMethylated[2] + counts.deNovoCpgUnMethylated[2] +
-			counts.deNovoCpgMethylated[3] + counts.deNovoCpgUndefMethylated[3] + counts.deNovoCpgUnMethylated[3];
+	return  counts.deNovoCpgMethylated[2] + counts.deNovoCpgInterMethylated[2] + counts.deNovoCpgUnMethylated[2] +
+			counts.deNovoCpgMethylated[3] + counts.deNovoCpgInterMethylated[3] + counts.deNovoCpgUnMethylated[3];
 }
 
 
@@ -416,21 +416,21 @@ unsigned int getTotalCpgSnpMethylatedQuality_over20(){ return counts.cpgWithSnpM
 
 
 /**
- * \brief Total CpGs With SNPs Undefined Methylated
+ * \brief Total CpGs With SNPs Intermediate Methylated
  */
-unsigned int getTotalCpgSnpUndefinedMethylated(){ return getTotalCount(counts.cpgWithSnpUndefMethylated);}
+unsigned int getTotalCpgSnpIntermediateMethylated(){ return getTotalCount(counts.cpgWithSnpInterMethylated);}
 
 
 /**
- * \brief Total CpGs With SNPs Undefined Methylated High Quality
+ * \brief Total CpGs With SNPs Intermediate Methylated High Quality
  */
-unsigned int getTotalCpgSnpUndefinedMethylatedHighQuality(){ return counts.cpgWithSnpUndefMethylated[3]; }
+unsigned int getTotalCpgSnpIntermediateMethylatedHighQuality(){ return counts.cpgWithSnpInterMethylated[3]; }
 
 
 /**
- * \brief  Total CpGs With SNPs Undefined Methylated Quality Over 20
+ * \brief  Total CpGs With SNPs Intermediate Methylated Quality Over 20
  */
-unsigned int getTotalCpgSnpUndefinedMethylatedQuality_over20(){	return counts.cpgWithSnpUndefMethylated[2] + counts.cpgWithSnpUndefMethylated[3];}
+unsigned int getTotalCpgSnpIntermediateMethylatedQuality_over20(){	return counts.cpgWithSnpInterMethylated[2] + counts.cpgWithSnpInterMethylated[3];}
 
 
 
@@ -485,8 +485,8 @@ void printCounts()
 	printf("\n");
 	printf("Total Methylated: \t %i \t (%.2f %%) \n", getTotalMethylated(),getPercentage(getTotalMethylated(), getTotalDinucleotides()));
 	printf("\t Total Methylated High Quality: \t %i \t (%.2f %%) \n", getTotalMethylatedHighQuality(),getPercentage(getTotalMethylatedHighQuality(), getTotalDinucleotides()));
-    printf("Total Undefined Methylated: \t %i \t (%.2f %%) \n", getTotalUndefinedMethylated(),getPercentage(getTotalUndefinedMethylated(), getTotalDinucleotides()));
-	printf("\t Total Undefined Methylated High Quality: \t %i \t (%.2f %%) \n", getTotalUndefinedMethylatedHighQuality(),getPercentage(getTotalUndefinedMethylatedHighQuality(), getTotalDinucleotides()));
+    printf("Total Intermediate Methylated: \t %i \t (%.2f %%) \n", getTotalIntermediateMethylated(),getPercentage(getTotalIntermediateMethylated(), getTotalDinucleotides()));
+	printf("\t Total Intermediate Methylated High Quality: \t %i \t (%.2f %%) \n", getTotalIntermediateMethylatedHighQuality(),getPercentage(getTotalIntermediateMethylatedHighQuality(), getTotalDinucleotides()));
 	printf("Total UnMethylated: \t %i \t (%.2f %%) \n", getTotalUnMethylated(),getPercentage(getTotalUnMethylated(), getTotalDinucleotides()));
 	printf("\t Total Unmethylated High Quality: \t %i \t (%.2f %%) \n", getTotalUnMethylatedHighQuality(),getPercentage(getTotalUnMethylatedHighQuality(), getTotalDinucleotides()));
 
@@ -497,10 +497,10 @@ void printCounts()
 	printf("\t Total Heterozygous Methylated High Quality: \t %i \t (%.2f %%)  \n", getTotalMethylatedHeterozygousHighQuality(),getPercentage(getTotalMethylatedHeterozygousHighQuality(),getTotalMethylated()));
 
 	printf("\n");
-	printf("Total Homozygous Undefined Methylated: \t %i \t (%.2f %%)  \n", getTotalUndefinedMethylatedHomozygous(),getPercentage(getTotalUndefinedMethylatedHomozygous(),getTotalUndefinedMethylated()));
-	printf("\t Total Homozygous Undefined Methylated High Quality: \t %i \t (%.2f %%)  \n", getTotalUndefinedMethylatedHomozygousHighQuality(),getPercentage(getTotalUndefinedMethylatedHomozygousHighQuality(),getTotalUndefinedMethylated()));
-	printf("Total Heterozygous Undefined Methylated: \t %i \t (%.2f %%)  \n", getTotalUndefinedMethylatedHeterozygous(),getPercentage(getTotalUndefinedMethylatedHeterozygous(),getTotalUndefinedMethylated()));
-	printf("\t Total Heterozygous Undefined Methylated High Quality: \t %i \t (%.2f %%)  \n", getTotalUndefinedMethylatedHeterozygousHighQuality(),getPercentage(getTotalUndefinedMethylatedHeterozygousHighQuality(),getTotalUndefinedMethylated()));
+	printf("Total Homozygous Intermediate Methylated: \t %i \t (%.2f %%)  \n", getTotalIntermediateMethylatedHomozygous(),getPercentage(getTotalIntermediateMethylatedHomozygous(),getTotalIntermediateMethylated()));
+	printf("\t Total Homozygous Intermediate Methylated High Quality: \t %i \t (%.2f %%)  \n", getTotalIntermediateMethylatedHomozygousHighQuality(),getPercentage(getTotalIntermediateMethylatedHomozygousHighQuality(),getTotalIntermediateMethylated()));
+	printf("Total Heterozygous Intermediate Methylated: \t %i \t (%.2f %%)  \n", getTotalIntermediateMethylatedHeterozygous(),getPercentage(getTotalIntermediateMethylatedHeterozygous(),getTotalIntermediateMethylated()));
+	printf("\t Total Heterozygous Intermediate Methylated High Quality: \t %i \t (%.2f %%)  \n", getTotalIntermediateMethylatedHeterozygousHighQuality(),getPercentage(getTotalIntermediateMethylatedHeterozygousHighQuality(),getTotalIntermediateMethylated()));
 
 	printf("\n");
 	printf("Total Homozygous UnMethylated: \t %i \t (%.2f %%) \n", getTotalUnMethylatedHomozygous(),getPercentage(getTotalUnMethylatedHomozygous(),getTotalUnMethylated()));
@@ -517,9 +517,9 @@ void printCounts()
 	printf("\t\t Total DeNovo CpGs Methylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsMethylatedQuality_over20(),getPercentage(getTotalDeNovoCpgsMethylatedQuality_over20(),getTotalDeNovoCpgs()));
 	printf("\t\t Total DeNovo CpGs Methylated High Quality: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsMethylatedHighQuality(),getPercentage(getTotalDeNovoCpgsMethylatedHighQuality(),getTotalDeNovoCpgs()));
 
-	printf("\t Total DeNovo CpGs Undefined Methylated: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsUndefinedMethylated(),getPercentage(getTotalDeNovoCpgsUndefinedMethylated(),getTotalDeNovoCpgs()));
-	printf("\t\t Total DeNovo CpGs Undefined Methylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsUndefinedMethylatedQuality_over20(),getPercentage(getTotalDeNovoCpgsUndefinedMethylatedQuality_over20(),getTotalDeNovoCpgs()));
-	printf("\t\t Total DeNovo CpGs Undefined Methylated High Quality: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsUndefinedMethylatedHighQuality(),getPercentage(getTotalDeNovoCpgsUndefinedMethylatedHighQuality(),getTotalDeNovoCpgs()));
+	printf("\t Total DeNovo CpGs Intermediate Methylated: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsIntermediateMethylated(),getPercentage(getTotalDeNovoCpgsIntermediateMethylated(),getTotalDeNovoCpgs()));
+	printf("\t\t Total DeNovo CpGs Intermediate Methylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsIntermediateMethylatedQuality_over20(),getPercentage(getTotalDeNovoCpgsIntermediateMethylatedQuality_over20(),getTotalDeNovoCpgs()));
+	printf("\t\t Total DeNovo CpGs Intermediate Methylated High Quality: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsIntermediateMethylatedHighQuality(),getPercentage(getTotalDeNovoCpgsIntermediateMethylatedHighQuality(),getTotalDeNovoCpgs()));
 
 	printf("\t Total DeNovo CpGs UnMethylated: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsUnMethylated(),getPercentage(getTotalDeNovoCpgsUnMethylated(),getTotalDeNovoCpgs()));
 	printf("\t\t Total DeNovo CpGs UnMethylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalDeNovoCpgsUnMethylatedQuality_over20(),getPercentage(getTotalDeNovoCpgsUnMethylatedQuality_over20(),getTotalDeNovoCpgs()));
@@ -534,9 +534,9 @@ void printCounts()
 	printf("\t\t Total CpG with SNP Called Methylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalCpgSnpMethylatedQuality_over20(),getPercentage(getTotalCpgSnpMethylatedQuality_over20(),getTotalCpgSnp()));
 	printf("\t\t Total CpG with SNP Called Methylated High Quality: \t %i \t (%.2f %%) \n",getTotalCpgSnpMethylatedHighQuality(),getPercentage(getTotalCpgSnpMethylatedHighQuality(),getTotalCpgSnp()));
 
-	printf("\t Total CpG with SNP Called Undefined Methylated: \t %i \t (%.2f %%) \n",getTotalCpgSnpUndefinedMethylated(),getPercentage(getTotalCpgSnpUndefinedMethylated(),getTotalCpgSnp()));
-	printf("\t\t Total CpG with SNP Called Undefined Methylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalCpgSnpUndefinedMethylatedQuality_over20(),getPercentage(getTotalCpgSnpUndefinedMethylatedQuality_over20(),getTotalCpgSnp()));
-	printf("\t\t Total CpG with SNP Called Undefined Methylated High Quality: \t %i \t (%.2f %%) \n",getTotalCpgSnpUndefinedMethylatedHighQuality(),getPercentage(getTotalCpgSnpUndefinedMethylatedHighQuality(),getTotalCpgSnp()));
+	printf("\t Total CpG with SNP Called Intermediate Methylated: \t %i \t (%.2f %%) \n",getTotalCpgSnpIntermediateMethylated(),getPercentage(getTotalCpgSnpIntermediateMethylated(),getTotalCpgSnp()));
+	printf("\t\t Total CpG with SNP Called Intermediate Methylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalCpgSnpIntermediateMethylatedQuality_over20(),getPercentage(getTotalCpgSnpIntermediateMethylatedQuality_over20(),getTotalCpgSnp()));
+	printf("\t\t Total CpG with SNP Called Intermediate Methylated High Quality: \t %i \t (%.2f %%) \n",getTotalCpgSnpIntermediateMethylatedHighQuality(),getPercentage(getTotalCpgSnpIntermediateMethylatedHighQuality(),getTotalCpgSnp()));
 
 	printf("\t Total CpG with SNP Called UnMethylated: \t %i \t (%.2f %%) \n",getTotalCpgSnpUnMethylated(),getPercentage(getTotalCpgSnpUnMethylated(),getTotalCpgSnp()));
 	printf("\t\t Total CpG with SNP Called UnMethylated Quality > 20: \t %i \t (%.2f %%) \n",getTotalCpgSnpUnMethylatedQuality_over20(),getPercentage(getTotalCpgSnpUnMethylatedQuality_over20(),getTotalCpgSnp()));
@@ -569,8 +569,8 @@ void saveCounts(char * fileName)
 
 	fprintf(fp,"  \"TotalMethylated\":%i,\n", getTotalMethylated());
 	fprintf(fp,"  \"TotalMethylatedHighQuality\":%i,\n", getTotalMethylatedHighQuality());
-	fprintf(fp,"  \"TotalUndefinedMethylated\":%i,\n", getTotalUndefinedMethylated());
-	fprintf(fp,"  \"TotalUndefinedMethylatedHighQuality\":%i,\n", getTotalUndefinedMethylatedHighQuality());
+	fprintf(fp,"  \"TotalIntermediateMethylated\":%i,\n", getTotalIntermediateMethylated());
+	fprintf(fp,"  \"TotalIntermediateMethylatedHighQuality\":%i,\n", getTotalIntermediateMethylatedHighQuality());
 	fprintf(fp,"  \"TotalUnMethylated\":%i,\n", getTotalUnMethylated());
 	fprintf(fp,"  \"TotalUnmethylatedHighQuality\":%i,\n", getTotalUnMethylatedHighQuality());
 
@@ -579,10 +579,10 @@ void saveCounts(char * fileName)
 	fprintf(fp,"  \"TotalHeterozygousMethylated\":%i,\n", getTotalMethylatedHeterozygous());
 	fprintf(fp,"  \"TotalHeterozygousMethylatedHighQuality\":%i,\n", getTotalMethylatedHeterozygousHighQuality());
 
-	fprintf(fp,"  \"TotalHomozygousUndefinedMethylated\":%i,\n", getTotalUndefinedMethylatedHomozygous());
-	fprintf(fp,"  \"TotalHomozygousUndefinedMethylatedHighQuality\":%i,\n", getTotalUndefinedMethylatedHomozygousHighQuality());
-	fprintf(fp,"  \"TotalHeterozygousUndefinedMethylated\":%i,\n", getTotalUndefinedMethylatedHeterozygous());
-	fprintf(fp,"  \"TotalHeterozygousUndefinedMethylatedHighQuality\":%i,\n", getTotalUndefinedMethylatedHeterozygousHighQuality());
+	fprintf(fp,"  \"TotalHomozygousIntermediateMethylated\":%i,\n", getTotalIntermediateMethylatedHomozygous());
+	fprintf(fp,"  \"TotalHomozygousIntermediateMethylatedHighQuality\":%i,\n", getTotalIntermediateMethylatedHomozygousHighQuality());
+	fprintf(fp,"  \"TotalHeterozygousIntermediateMethylated\":%i,\n", getTotalIntermediateMethylatedHeterozygous());
+	fprintf(fp,"  \"TotalHeterozygousIntermediateMethylatedHighQuality\":%i,\n", getTotalIntermediateMethylatedHeterozygousHighQuality());
 
 	fprintf(fp,"  \"TotalHomozygousUnMethylated\":%i,\n", getTotalUnMethylatedHomozygous());
 	fprintf(fp,"  \"TotalHomozygousUnMethylatedHighQuality\":%i,\n", getTotalUnMethylatedHomozygousHighQuality());
@@ -597,9 +597,9 @@ void saveCounts(char * fileName)
 	fprintf(fp,"  \"TotalDeNovoCpGsMethylatedQualityO20\":%i,\n",getTotalDeNovoCpgsMethylatedQuality_over20());
 	fprintf(fp,"  \"TotalDeNovoCpGsMethylatedHighQuality\":%i,\n",getTotalDeNovoCpgsMethylatedHighQuality());
 
-	fprintf(fp,"  \"TotalDeNovoCpGsUndefinedMethylated\":%i,\n",getTotalDeNovoCpgsUndefinedMethylated());
-	fprintf(fp,"  \"TotalDeNovoCpGsUndefinedMethylatedQualityO20\":%i,\n",getTotalDeNovoCpgsUndefinedMethylatedQuality_over20());
-	fprintf(fp,"  \"TotalDeNovoCpGsUndefinedMethylatedHighQuality\":%i,\n",getTotalDeNovoCpgsUndefinedMethylatedHighQuality());
+	fprintf(fp,"  \"TotalDeNovoCpGsIntermediateMethylated\":%i,\n",getTotalDeNovoCpgsIntermediateMethylated());
+	fprintf(fp,"  \"TotalDeNovoCpGsIntermediateMethylatedQualityO20\":%i,\n",getTotalDeNovoCpgsIntermediateMethylatedQuality_over20());
+	fprintf(fp,"  \"TotalDeNovoCpGsIntermediateMethylatedHighQuality\":%i,\n",getTotalDeNovoCpgsIntermediateMethylatedHighQuality());
 
 	fprintf(fp,"  \"TotalDeNovoCpGsUnMethylated\":%i,\n",getTotalDeNovoCpgsUnMethylated());
 	fprintf(fp,"  \"TotalDeNovoCpGsUnMethylatedQualityO20\":%i,\n",getTotalDeNovoCpgsUnMethylatedQuality_over20());
@@ -613,9 +613,9 @@ void saveCounts(char * fileName)
 	fprintf(fp,"  \"TotalCpGwithSNPCalledMethylatedQualityO20\":%i,\n",getTotalCpgSnpMethylatedQuality_over20());
 	fprintf(fp,"  \"TotalCpGwithSNPCalledMethylatedHighQuality\":%i,\n",getTotalCpgSnpMethylatedHighQuality());
 
-	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylated\":%i,\n",getTotalCpgSnpUndefinedMethylated());
-	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylatedQualityO20\":%i,\n",getTotalCpgSnpUndefinedMethylatedQuality_over20());
-	fprintf(fp,"  \"TotalCpGwithSNPCalledUndefinedMethylatedHighQuality\":%i,\n",getTotalCpgSnpUndefinedMethylatedHighQuality());
+	fprintf(fp,"  \"TotalCpGwithSNPCalledIntermediateMethylated\":%i,\n",getTotalCpgSnpIntermediateMethylated());
+	fprintf(fp,"  \"TotalCpGwithSNPCalledIntermediateMethylatedQualityO20\":%i,\n",getTotalCpgSnpIntermediateMethylatedQuality_over20());
+	fprintf(fp,"  \"TotalCpGwithSNPCalledIntermediateMethylatedHighQuality\":%i,\n",getTotalCpgSnpIntermediateMethylatedHighQuality());
 
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUnMethylated\":%i,\n",getTotalCpgSnpUnMethylated());
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUnMethylatedQualityO20\":%i,\n",getTotalCpgSnpUnMethylatedQuality_over20());
