@@ -35,6 +35,9 @@ void initCounts()
 	    counts.cpgWithSnpInterMethylated[i] = 0;
 	    counts.cpgWithSnpUnMethylated[i] = 0;
 	}
+
+	//Initialize vector methylation value
+	vector_init(&vectorMethValues);
 }
 
 /**
@@ -72,6 +75,9 @@ void addCounts(struct Record * record,unsigned int * cnt)
  */
 void addRecordStats(struct Record * record)
 {
+	//TODO METH VALUES VECTOR https://www.happybearsoftware.com/implementing-a-dynamic-array
+
+
     /* 1. Check contig existance */
 	if(record->contig == NULL)
 	{
@@ -103,62 +109,71 @@ void addRecordStats(struct Record * record)
 			/*3.1.3 UnMethylated*/
 			addCounts(record,counts.homozygousMethylated);
 		}
+
+		/*3.2 Append Mehylation Values for those CGs Homozygous and High Quality*/
+		if(strcmp(record->referenceContext,"CG") == 0)
+		{
+			if(record->phredScore > 20)
+			{
+				vector_append(&vectorMethValues, record->methValue);
+			}
+		}
 	}
 	else
 	{
-		/*3.2 Heterozygous Dinucleotide */
+		/*3.3 Heterozygous Dinucleotide */
 		if (record->methValue <= 0.3)
 		{
-			/*3.2.1 Methylated*/
+			/*3.3.1 Methylated*/
 			addCounts(record,counts.heterozygousUnMethylated);
 		}
 		else if(record->methValue > 0.3 && record->methValue <= 0.7)
 		{
-			/*3.2.2 Intermediate Methylation*/
+			/*3.3.2 Intermediate Methylation*/
 			addCounts(record,counts.heterozygousInterMethylated);
 		}
 		else
 		{
-			/*3.2.3 UnMethylated*/
+			/*3.3.3 UnMethylated*/
 			addCounts(record,counts.heterozygousMethylated);
 		}
 
-		/*3.3 DeNovo CpGs Detectected*/
+		/*3.4 DeNovo CpGs Detectected*/
 		if(strcmp(record->referenceContext, "CG") != 0 && strcmp(record->callContext, "CG") == 0 )
 		{
 			if (record->methValue <= 0.3)
 			{
-				/*3.3.1 Methylated*/
+				/*3.4.1 Methylated*/
 				addCounts(record,counts.deNovoCpgUnMethylated);
 			}
 			else if(record->methValue > 0.3 && record->methValue <= 0.7)
 			{
-				/*3.3.2 Intermediate Methylation*/
+				/*3.4.2 Intermediate Methylation*/
 				addCounts(record,counts.deNovoCpgInterMethylated);
 			}
 			else
 			{
-				/*3.3.3 UnMethylated*/
+				/*3.4.3 UnMethylated*/
 				addCounts(record,counts.deNovoCpgMethylated);
 			}
 		}
 
-		/*3.4 CpG With SNPs*/
+		/*3.5 CpG With SNPs*/
 		if(strcmp(record->referenceContext, "CG") == 0 && strcmp(record->callContext, "CG") != 0 )
 		{
 			if (record->methValue <= 0.3)
 			{
-				/*3.4.1 Methylated*/
+				/*3.5.1 Methylated*/
 				addCounts(record,counts.cpgWithSnpUnMethylated);
 			}
 			else if(record->methValue > 0.3 && record->methValue <= 0.7)
 			{
-				/*3.4.2 Intermediate Methylation*/
+				/*3.5.2 Intermediate Methylation*/
 				addCounts(record,counts.cpgWithSnpInterMethylated);
 			}
 			else
 			{
-				/*3.4.3 UnMethylated*/
+				/*3.5.3 UnMethylated*/
 				addCounts(record,counts.cpgWithSnpMethylated);
 			}
 		}
@@ -621,10 +636,58 @@ void saveCounts(char * fileName)
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUnMethylatedQualityO20\":%i,\n",getTotalCpgSnpUnMethylatedQuality_over20());
 	fprintf(fp,"  \"TotalCpGwithSNPCalledUnMethylatedHighQuality\":%i\n",getTotalCpgSnpUnMethylatedHighQuality());
 
+
 	fprintf(fp,"}\n");
 
 	fclose(fp);
+
+
 }
+
+/**
+ * \brief Print Methylation values to JSON file
+ * \param json file to store the methylation data
+ */
+void saveJsonMethylationCounts(char * fileName)
+{
+	FILE *fp;
+
+	fp = fopen(fileName, "w");
+
+	fprintf(fp,"{\n");
+
+	/*Vector of Methylation Value */
+	unsigned int i = 0;
+
+	fprintf(fp,"  \"MethValues\":[");
+
+	for(i=0; i < vectorMethValues.size;i++)
+	{
+		if(i == (vectorMethValues.size -1))
+		{
+			fprintf(fp," %.3f",vector_get(&vectorMethValues,i));
+		}
+		else
+		{
+			fprintf(fp," %.3f,",vector_get(&vectorMethValues,i));
+		}
+	}
+
+	fprintf(fp,"]\n");
+
+	fprintf(fp,"}\n");
+
+
+	fclose(fp);
+
+	/*Close Vector*/
+    vector_free(&vectorMethValues);
+}
+
+
+
+
+
 
 
 

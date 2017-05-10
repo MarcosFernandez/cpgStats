@@ -28,6 +28,9 @@ struct Counts {
    unsigned int cpgWithSnpUnMethylated[4];
 } counts;
 
+//Declare a new vector
+Vector vectorMethValues;
+
 
 void initCounts();
 void addRecordStats(struct Record * record);
@@ -109,6 +112,7 @@ float getPercentage(unsigned int concept, unsigned int totalValue);
 
 void printCounts();
 void saveCounts(char * fileName);
+void saveJsonMethylationCounts(char * fileName);
 
 
 

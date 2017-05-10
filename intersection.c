@@ -447,7 +447,7 @@ int runIsec(char * nameFileOne, char * nameFileTwo,int isGzip)
 				}
 				else
 				{
-				/*3.3 NO MORE READS FROM FILE ONE TO BE PROCESSED*/
+				    /*3.3 NO MORE READS FROM FILE ONE TO BE PROCESSED*/
 					processRemainingReadsFileTwo(processed_read_two,fileDescriptor_two,isGzip,&recordTwo);
 				}
 			}

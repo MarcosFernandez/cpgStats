@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../common.c \
 ../counts.c \
 ../intersection.c \
 ../main.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 ../parseInput.c 
 
 OBJS += \
+./common.o \
 ./counts.o \
 ./intersection.o \
 ./main.o \
@@ -20,6 +22,7 @@ OBJS += \
 ./parseInput.o 
 
 C_DEPS += \
+./common.d \
 ./counts.d \
 ./intersection.d \
 ./main.d \

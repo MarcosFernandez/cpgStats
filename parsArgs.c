@@ -17,11 +17,12 @@ void printHelp()
 	printf("cpgStats Parses a CpG Dinucleotide file and outputs its statistical results. \n");
 	printf("It can produce a json output and annotate a bed file. \n");
 	printf("Two CpG Dinucleotides files could be compared using Intersection parameters. \n");
-	printf("cpgStats -i cpgFile [-z] [-o results.json] [-b file.sorted.bed -a file.output.bed [-g] ] \n");
+	printf("cpgStats -i cpgFile [-z] [-o results.json] [-s meth.values.json] [-b file.sorted.bed -a file.output.bed [-g] ] \n");
 	printf("STATS:\n");
 	printf("\t-i \t CpG Input file. \n");
 	printf("\t-z \t CpG File is gzipped. \n");
 	printf("\t-o \t JSON Output file. \n");
+	printf("\t-s \t JSON Output Methylation Values File. \n");
 	printf("ANNOTATION:\n");
 	printf("\t-b \t SORTED BED Input file to annotate methylation per each window. \n");
 	printf("\t-a \t Output annotated methylation file.\n");
@@ -50,6 +51,7 @@ void initArgs(struct Args * arguments)
 {
 	arguments->cpgInputFile = NULL;
 	arguments->jsonFile = NULL;
+	arguments->methJsonFile = NULL;
 	arguments->bedFile = NULL;
 	arguments->annotatedFile = NULL;
 	arguments->isZipped = 0;
@@ -94,7 +96,7 @@ int getArgs (struct Args * arguments, int argc, char *argv[])
 		return 0;
 	}
 
-	while ((opt = getopt(argc, argv, "i:o:b:a:zhvx:y:g")) != -1)
+	while ((opt = getopt(argc, argv, "i:o:s:b:a:zhvx:y:g")) != -1)
 	{
 	    switch(opt)
 	    {
@@ -104,6 +106,9 @@ int getArgs (struct Args * arguments, int argc, char *argv[])
 	        case 'o':
 	            arguments->jsonFile = optarg;
 	            break;
+	        case 's':
+	        	arguments->methJsonFile = optarg;
+	        	break;
 	        case 'h':
 	        	printHelp();
 	        	return 0;
